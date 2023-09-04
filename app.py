@@ -1,6 +1,6 @@
 # Trabajo Práctico I - Programación II
 
-
+import bibloteca
 import os
 
 print("Bienvenido!")
@@ -20,14 +20,12 @@ while respuesta != "salir":
     os.system ("cls") #Limpiar pantalla
     if opt.isnumeric():
         if int(opt) == 1:
-            #completar
-            print()
+            bibloteca.prestar_ejemplar_libro()
         elif int(opt) == 2:
-            #completar
+            bibloteca.devolver_ejemplar_libro()
             print()
         elif int(opt) == 3:
-            #completar
-            print()
+            bibloteca.registrar_nuevo_libro()
         elif int(opt) == 4:
             #completar
             print()
