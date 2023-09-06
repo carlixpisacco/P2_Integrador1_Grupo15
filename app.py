@@ -1,17 +1,17 @@
 # Trabajo Práctico I - Programación II
 
-import bibloteca
+import biblioteca
 import os
 
 print("Bienvenido!")
 respuesta = ''
 
 def menu():
-    print("1 - Gestionar Prestamo")
-    print("2 - Gestionar Devolucion")
+    print("1 - Gestionar Préstamo")
+    print("2 - Gestionar Devolución")
     print("3 - Registrar nuevo libro")
-    print("4 - Elimiar ejemplar")
-    print("5 - Mostrar ejemplares perstados")
+    print("4 - Eliminar ejemplar")
+    print("5 - Mostrar ejemplares prestados")
     print("6 - Salir")
 
 while respuesta != "salir":
@@ -20,12 +20,12 @@ while respuesta != "salir":
     os.system ("cls") #Limpiar pantalla
     if opt.isnumeric():
         if int(opt) == 1:
-            bibloteca.prestar_ejemplar_libro()
+            biblioteca.prestar_ejemplar_libro()
         elif int(opt) == 2:
-            bibloteca.devolver_ejemplar_libro()
+            biblioteca.devolver_ejemplar_libro()
             print()
         elif int(opt) == 3:
-            bibloteca.registrar_nuevo_libro()
+            biblioteca.registrar_nuevo_libro()
         elif int(opt) == 4:
             #completar
             print()
