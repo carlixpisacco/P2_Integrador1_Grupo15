@@ -11,14 +11,15 @@ libros.append(l.libro3)
 
 #primera funcion
 def ejemplares_prestados():
-   
-    return None
+   print("\nEjemplares prestados:")
+   for libro in libros:
+    print(f"Título: {libro['titulo']} - Ejemplares prestados: {libro['cant_ej_pr']}")
+   return None
 
 #segunda funcion
 
 def registrar_nuevo_libro():
-   nuevo_libro = l.nuevo_libro()
-   libros.append(nuevo_libro)
+   libros = nuevo_libro()
    print("\nLibros disponibles e información:")
    for libro in libros:
         print("\nCódigo:", libro['cod'])
@@ -31,7 +32,34 @@ def registrar_nuevo_libro():
 #tercera funcion
 
 def eliminar_ejemplar_libro():
-    #completar
+    opc_volver_ingresar = "1"
+    while opc_volver_ingresar == "1":
+        busc_devolucion = input("\nIngrese el código del libro que desea eliminar ejemplar:\n")
+        encontrado = False
+        for libro in libros:
+            if busc_devolucion == libro.get('cod'):
+                encontrado = True
+                if libro["cant_ej_ad"] > 0:
+                    opc = input(f"\nDesea eliminar un ejemplar del libro '{libro['titulo']}'? Si/No:\n").lower()
+                    if opc == "si":
+                        print("\nEl ejemplar se ha eliminado con éxito.\n")
+                        libro["cant_ej_ad"] -= 1
+                        print("La cantidad actualizada de ejemplares disponibles es:", libro["cant_ej_ad"])
+                        print("La cantidad actualizada de ejemplares prestados es:", libro["cant_ej_pr"])
+                    else:
+                        print("\nEl libro no fue eliminado.")
+                else:
+                    print("\nError. No hay ejemplares disponibles de este libro para ser eliminados.")
+        if not encontrado:
+            print("\nEl libro con el código '",busc_devolucion,"' no fue encontrado.")
+    
+        print("\n¿Desea volver a ingresar otro código?")
+        print("Presione 1 si quiere volver a ingresar un código.")
+        print("Cualquier otra tecla para salir de este menú.")
+        opc_volver_ingresar = input("-")
+
+        if opc_volver_ingresar != "1":
+            break
     return None
 
 #cuarta funcion
@@ -39,12 +67,12 @@ def eliminar_ejemplar_libro():
 def prestar_ejemplar_libro():
     opc_volver_ingresar = "1"
     while opc_volver_ingresar == "1":
-        busc_prestamo = input('Ingresar el código del libro:\n')
+        busc_prestamo = input('\nIngrese el código del libro que desea retirar:\n')
         encontrado = False 
         for libro in libros:
             if busc_prestamo == libro.get('cod'):
                 encontrado = True
-                print("Información del libro:")
+                print("\nInformación del libro:")
                 print("Código:", libro['cod'])
                 print("Cantidad de ejemplares disponibles:", libro["cant_ej_ad"])
                 print("Cantidad de ejemplares prestados:", libro["cant_ej_pr"])
@@ -52,75 +80,68 @@ def prestar_ejemplar_libro():
                 print("Autor:", libro["autor"])
 
                 if libro["cant_ej_ad"] > 0:
-                    opc = input("Desea aprobar este préstamo? Si/No: ")
+                    opc = input(f"\nDesea aprobar el prestamo del libro '{libro['titulo']}'? Si/No: ")
                     if opc.lower() == "si":
                         libro['cant_ej_pr'] += 1
                         libro['cant_ej_ad'] -= 1
-                        print("Préstamo aprobado.")
+                        print("\nPréstamo aprobado.")
                     else:
-                        print("No se aprobó el préstamo.")
+                        print("\nNo se aprobó el préstamo.")
                 else:
-                    print("Error. Ya no quedan ejemplares para prestar.")
-                opc_volver_ingresar = "0"
-                break
-            
-        if encontrado == False:
-            print("\nEl libro con el código", busc_prestamo, "no fue encontrado.")
-            print("¿Desea volver a ingresar otro código?")
-            print("Presione 1 si quiere buscar con otro código.")
-            print("Cualquier otra tecla para salir de este menú.")
-            opc_volver_ingresar = input("-")
-            if opc_volver_ingresar == "1":
-                continue
-            elif opc_volver_ingresar != "1":
-                break
-    return None
+                    print(f"\nError. Ya no quedan ejemplares de {libro['titulo']} para prestar.")
+                break  
+        if not encontrado:
+            print("\nEl libro con el código '",busc_prestamo,"' no fue encontrado.")
+        
+        print("\n¿Desea volver a ingresar otro código?")
+        print("Presione 1 si quiere volver a ingresar un código.")
+        print("Cualquier otra tecla para salir de este menú.")
+        opc_volver_ingresar = input("-")
 
+        if opc_volver_ingresar != "1":
+            break
+    return None
 #quinta funcion
 
 def devolver_ejemplar_libro():
     opc_volver_ingresar = "1"
     while opc_volver_ingresar == "1":
-        busc_devolucion = input("Ingresar el código del libro que desea devolver:\n")
+        busc_devolucion = input("\nIngrese el código del libro que desea devolver:\n")
         encontrado = False
         for libro in libros:
             if busc_devolucion == libro.get('cod'):
                 encontrado = True
                 if libro["cant_ej_pr"] > 0:
-                    opc = input("Desea devolver el ejemplar? Si/No:\n")
-                    if opc.lower() == "si":  
+                    opc = input(f"\nDesea devolver el ejemplar de {libro['titulo']}? Si/No:\n").lower()
+
+                    if opc == "si":
                         print("\nDevolución exitosa.\n")
                         libro["cant_ej_ad"] += 1
                         libro["cant_ej_pr"] -= 1
-                        print("La cantidad actualizada de ejemplares disponibles es: ", libro["cant_ej_ad"])
-                        print("La cantidad actualizada de ejemplares prestados es: ", libro["cant_ej_pr"])
-
+                        print("La cantidad actualizada de ejemplares disponibles es:", libro["cant_ej_ad"])
+                        print("La cantidad actualizada de ejemplares prestados es:", libro["cant_ej_pr"])
                     else:
-                        print("No se gestionó la devolución")          
+                        print("\nNo se gestionó la devolución.")
                 else:
-                    print("Error. No hay ejemplares de este libro prestados.")
-                    print("¿Desea volver a ingresar otro código?")
-                    print("Presione 1 si quiere buscar con otro código.")
-                    print("Cualquier otra tecla para salir de este menú.")
-                    opc_volver_ingresar = input("-")
-                    if opc_volver_ingresar == "1":
-                        continue
-                    elif opc_volver_ingresar != "1":
-                        break
-                opc_volver_ingresar = "0"
+                    print(f"\nError. No hay ejemplares de {libro['titulo']} prestados.")
+    
+        if not encontrado:
+            print("\nEl libro con el código '",busc_devolucion,"' no fue encontrado.")
+    
+        print("\n¿Desea volver a ingresar otro código?")
+        print("Presione 1 si quiere volver a ingresar un código.")
+        print("Cualquier otra tecla para salir de este menú.")
+        opc_volver_ingresar = input("-")
 
-        if encontrado == False:
-            print("\nEl libro con el código", busc_devolucion, "no fue encontrado.")
-            print("¿Desea volver a ingresar otro código?")
-            print("Presione 1 si quiere buscar con otro código.")
-            print("Cualquier otra tecla para salir de este menú.")
-            opc_volver_ingresar = input("-")
-            if opc_volver_ingresar == "1":
-                continue
-            elif opc_volver_ingresar != "1":
-                break
+        if opc_volver_ingresar != "1":
+            break
     return None
 
+#sexta funcion
 
+def nuevo_libro():
+   nuevo_libro = l.nuevo_libro()
+   libros.append(nuevo_libro)
+   return libros
 
 

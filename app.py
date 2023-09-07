@@ -27,10 +27,10 @@ while respuesta != "salir":
         elif int(opt) == 3:
             biblioteca.registrar_nuevo_libro()
         elif int(opt) == 4:
-            #completar
+            biblioteca.eliminar_ejemplar_libro()
             print()
         elif int(opt) == 5:
-            #completar
+            biblioteca.ejemplares_prestados()
             print()
         elif int(opt) == 6:
             respuesta = "salir"
